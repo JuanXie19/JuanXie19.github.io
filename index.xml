@@ -2,10 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>My New Hugo Site</title>
-    <link>https://example.org/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 02 Mar 2025 15:45:51 -0500</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>http://localhost:1313/about/</link>
+      <pubDate>Sun, 02 Mar 2025 15:45:51 -0500</pubDate>
+      <guid>http://localhost:1313/about/</guid>
+      <description>&lt;h2 id=&#34;who-am-i&#34;&gt;Who Am I?&lt;/h2&gt;&#xA;&lt;p&gt;Hi! I’m Juan, a biostatistics PhD candidate with a passion for data analysis, statistical modeling, and solving real-world problems in biology and health. Despite being in the middle of my PhD journey, I often feel like there’s still so much to learn—and that’s okay! This website is my space to document my progress, share my experiences, and reflect on the challenges and joys of learning biostatistics.&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-this-website-exists&#34;&gt;Why This Website Exists&lt;/h2&gt;&#xA;&lt;p&gt;This website is my personal space for recording my journey through biostatistics, bioinformatics, tool exploration, and paper reading. I’m not an expert, and my thoughts might not always be correct, but I believe that regularly documenting my experiences and learnings will help me grow—and maybe even help others who are on a similar path.&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>
