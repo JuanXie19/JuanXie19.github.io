@@ -4,7 +4,7 @@
 	<meta name="generator" content="Hugo 0.145.0"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> | My New Hugo Site</title>
+    <title>Welcome to My Hugo site | Juan&#39;s Hugo Site</title>
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/fonts.css" />
     
@@ -14,6 +14,12 @@
     <nav>
     <ul class="menu">
       
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/about/">About</a></li>
+      
+      <li><a href="/posts/">Posts</a></li>
+      
     </ul>
     <hr/>
     </nav>
@@ -21,6 +27,27 @@
 
 
 
+<h2 id="about-this-site">About This Site</h2>
+<p>Hi there! Welcome to my personal website, where I share my journey through bioinformatics, biostatistics, and data analysis. This is a space for me to document my learning, explore new tools, and reflect on the challenges and joys of working in this field.</p>
+<h3 id="what-youll-find-here">What You’ll Find Here</h3>
+<ul>
+<li><strong>Tool Tutorials</strong>: My experiences with bioinformatics tools, including tips, tricks, and troubleshooting.</li>
+<li><strong>Paper Summaries</strong>: Reflections on papers I’ve read, focusing on key takeaways and how they relate to my work or interests.</li>
+<li><strong>Thoughts on Learning</strong>: Musings on the challenges of being a PhD candidate, the joy of discovery, and the never-ending process of learning.</li>
+</ul>
+<h3 id="recent-posts">Recent Posts</h3>
+<p>{{ range first 5 (where .Site.RegularPages &ldquo;Section&rdquo; &ldquo;posts&rdquo;) }}</p>
+<ul>
+<li>[{{ .Title }}]({{ .RelPermalink }})
+{{ end }}</li>
+</ul>
+<h3 id="explore-more">Explore More</h3>
+<ul>
+<li><a href="/about/">About Me</a></li>
+<li><a href="/posts/">All Posts</a></li>
+</ul>
+<hr>
+<p>Feel free to explore, and if you have any questions or suggestions, don’t hesitate to reach out!</p>
 
 
 <ul>
