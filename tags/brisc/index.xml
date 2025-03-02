@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Welcome to My Hugo site on Juan&#39;s Hugo Site</title>
-    <link>https://JuanXie19.github.io/</link>
-    <description>Recent content in Welcome to My Hugo site on Juan&#39;s Hugo Site</description>
+    <title>BRISC on Juan&#39;s Hugo Site</title>
+    <link>https://JuanXie19.github.io/tags/brisc/</link>
+    <description>Recent content in BRISC on Juan&#39;s Hugo Site</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 28 Feb 2025 19:22:00 +0000</lastBuildDate>
-    <atom:link href="https://JuanXie19.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://JuanXie19.github.io/tags/brisc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Reading Notes on BRISC: bootstrap for rapid inference on spatial covariances</title>
       <link>https://JuanXie19.github.io/posts/notes-about-brisc/</link>

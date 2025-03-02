@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reading Notes on BRISC: bootstrap for rapid inference on spatial covariances | Juan&#39;s Hugo Site</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/about/">About</a></li>
+      
+      <li><a href="/posts/">Posts</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title">Reading Notes on BRISC: bootstrap for rapid inference on spatial covariances</span></h1>
+
+<h2 class="date">2025/02/28</h2>
+</div>
+
+<main>
+<h2 id="introduction-to-gaussian-processes">Introduction to Gaussian Processes</h2>
+<p>A Gaussian Process (GP) is defined by its mean function ( \mu(x) ) and covariance function ( k(x, x&rsquo;) ):</p>
+<p>[
+f(x) \sim \mathcal{GP}(\mu(x), k(x, x&rsquo;))
+]</p>
+<p>The covariance matrix ( K ) is given by:</p>
+<p>[
+K_{ij} = k(x_i, x_j)
+]</p>
+<h3 id="why-are-gps-popular">Why are GPs Popular?</h3>
+<ul>
+<li><strong>Flexibility:</strong> GPs can model complex, non-linear relationships.</li>
+<li><strong>Probabilistic Predictions:</strong> GPs provide uncertainty estimates.</li>
+<li><strong>Applications:</strong> Widely used in geostatistics, machine learning, and Bayesian optimization.</li>
+</ul>
+<h2 id="computational-challenges-in-gps">Computational Challenges in GPs</h2>
+<h3 id="inverting-the-covariance-matrix">Inverting the Covariance Matrix</h3>
+<p>The main computational bottleneck in GPs is the need to invert the covariance matrix ( K ), which has ( O(n^3) ) complexity. For large datasets, this becomes infeasible.</p>
+<h3 id="predictions-at-new-locations">Predictions at New Locations</h3>
+<p>For each new location, we need to compute the conditional distribution, which involves solving linear systems with the covariance matrix.</p>
+<h2 id="common-approaches-to-address-computational-bottlenecks">Common Approaches to Address Computational Bottlenecks</h2>
+<h3 id="nearest-neighbor-gaussian-processes-nngp">Nearest Neighbor Gaussian Processes (NNGP)</h3>
+<p>NNGP approximates the full GP by considering only a subset of neighbors for each location, reducing the computational complexity to ( O(nm^3) ).</p>
+<h3 id="sparse-approximations">Sparse Approximations</h3>
+<p>Methods like inducing points or low-rank approximations reduce the size of the covariance matrix.</p>
+<h2 id="introduction-to-bootstrap-methods">Introduction to Bootstrap Methods</h2>
+<h3 id="what-is-bootstrapping">What is Bootstrapping?</h3>
+<p>Bootstrapping is a resampling technique used to estimate the distribution of a statistic.</p>
+<h3 id="why-use-bootstrapping-for-spatial-data">Why Use Bootstrapping for Spatial Data?</h3>
+<p>Bootstrapping can approximate the likelihood function without expensive matrix operations.</p>
+<h2 id="brisc-combining-nngp-with-bootstrap">BRISC: Combining NNGP with Bootstrap</h2>
+<h3 id="how-brisc-works">How BRISC Works</h3>
+<p>BRISC uses bootstrap resampling to approximate the likelihood function and combines this with the NNGP framework.</p>
+<h3 id="advantages-of-brisc">Advantages of BRISC</h3>
+<ul>
+<li><strong>Computational Efficiency:</strong> Reduces the cost of spatial covariance estimation.</li>
+<li><strong>Accuracy:</strong> Maintains comparable accuracy to traditional methods.</li>
+<li><strong>Scalability:</strong> Suitable for large spatial datasets.</li>
+</ul>
+
+</main>
+
+  <footer>
+  
+  
+  </footer>
+  </body>
+</html>
+
