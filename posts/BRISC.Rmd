@@ -54,15 +54,15 @@ Gaussian Processes (GPs) are widely used in machine learning, statistics, and sp
    - The parameters of the kernel function often have intuitive interpretations, such as length scales or variance, making GPs more interpretable than some other machine learning models.
 
 
-Despite their many advantages, GPs face a significant computational bottleneck: the need to invert the covariance matrix \( K(x,x') \), which has \( O(n^3) \) complexity, where n is the number of observations). For large datasets, this becomes infeasible, limiting the scalability of traditional GPs.
+Despite their many advantages, GPs face a significant computational bottleneck: the need to invert the covariance matrix $( K(x,x') $, which has $ O(n^3) $ complexity, where n is the number of observations). For large datasets, this becomes infeasible, limiting the scalability of traditional GPs.
 
 To address the computational challenges of traditional GPs, Nearest Neighbor Gaussian Process (NNGP) has been developed. NNGP approximates the full GP by limiting dependencies between data points to a small subset of nearest neighbors. This reduces the computational complexity while retaining the key properties of GPs, making it a scalable alternative for large datasets.
 
 ## Nearest neighbor Gaussian process(NNGP)
 
-Nearest Neighbor Gaussian Process (NNGP) is a powerful method for approximating Gaussian Processes (GPs) to make them computationally feasible for large datasets. Traditional GPs require inverting a dense covariance matrix, which has a computational complexity of\( O(n^3) \)  and becomes infeasible for large n. NNGP addresses this challenge by approximating the full conditional distribution using only a subset of nearest neighbors.
+Nearest Neighbor Gaussian Process (NNGP) is a powerful method for approximating Gaussian Processes (GPs) to make them computationally feasible for large datasets. Traditional GPs require inverting a dense covariance matrix, which has a computational complexity of $ O(n^3) $  and becomes infeasible for large n. NNGP addresses this challenge by approximating the full conditional distribution using only a subset of nearest neighbors.
 
-The intuition behind NNGP is that spatial correlation decays with distance. In other words, data points that are far apart have little influence on each other. Therefore, instead of considering all data points, NNGP assumes that each data point depends only on a small subset of its nearest neighbors. This reduces the computational complexity to \( O(nm^2) \),where 
+The intuition behind NNGP is that spatial correlation decays with distance. In other words, data points that are far apart have little influence on each other. Therefore, instead of considering all data points, NNGP assumes that each data point depends only on a small subset of its nearest neighbors. This reduces the computational complexity to $ O(nm^2) $,where 
 m is the number of neighbors, making NNGP scalable for large datasets.
 
 ## Introduction to Bootstrap
@@ -91,19 +91,19 @@ While the bootstrap is widely applicable, its **independence assumption** is oft
 
 To apply the bootstrap to spatial data, we need to account for spatial correlation. One common approach is to use **Cholesky decomposition** to decorrelate the data before resampling. Here’s how it works:
 
-1. **Covariance Matrix**: Compute the covariance matrix \( \Sigma \) of the spatial data, which captures the correlation structure.
-2. **Cholesky Decomposition**: Factorize \( \Sigma \) into \( \Sigma = LL^T \), where \( L \) is a lower triangular matrix.
-3. **Decorrelate the Data**: Transform the original data \( Y \) into decorrelated data \( Z \) using:
-   \[
+1. **Covariance Matrix**: Compute the covariance matrix $ \Sigma $ of the spatial data, which captures the correlation structure.
+2. **Cholesky Decomposition**: Factorize $ \Sigma $ into $ \Sigma = LL^T $, where $ L $ is a lower triangular matrix.
+3. **Decorrelate the Data**: Transform the original data $ Y $ into decorrelated data $ Z $ using:
+   $$
    Z = L^{-1} Y
-   \]
+   $$
    This transformation removes the spatial correlation, making the data approximately independent.
-4. **Resample**: Apply the bootstrap to the decorrelated data \( Z \).
+4. **Resample**: Apply the bootstrap to the decorrelated data $ Z $.
 5. **Recorrelate**: Transform the resampled data back to the original space using:
-   \[
+   $$
    Y^* = L Z^*
-   \]
-   where \( Z^* \) is the resampled decorrelated data and \( Y^* \) is the resampled spatial data.
+  $$
+   where $Z^*$ is the resampled decorrelated data and $ Y^* $ is the resampled spatial data.
 
 ### Advantages of Decorrelated Bootstrap
 
@@ -125,34 +125,34 @@ For those interested in the mathematical formulation, here’s a brief overview:
 
 ### Covariance Matrix
 
-The covariance matrix \( \Sigma \) is defined as:
-\[
+The covariance matrix $ \Sigma $ is defined as:
+$$
 \Sigma_{ij} = k(x_i, x_j)
-\]
-where \( k(x_i, x_j) \) is the spatial covariance function (e.g., RBF kernel).
+$$
+where $ k(x_i, x_j) $ is the spatial covariance function (e.g., RBF kernel).
 
 ### Cholesky Decomposition
 
-The Cholesky decomposition of \( \Sigma \) is:
-\[
+The Cholesky decomposition of $ \Sigma $ is:
+$$
 \Sigma = LL^T
-\]
-where \( L \) is a lower triangular matrix.
+$$
+where $ L $ is a lower triangular matrix.
 
 ### Decorrelating the Data
 
-The decorrelated data \( Z \) is computed as:
-\[
+The decorrelated data $ Z $ is computed as:
+$$
 Z = L^{-1} Y
-\]
-This transformation ensures that \( Z \) has approximately independent components.
+$$
+This transformation ensures that $ Z $ has approximately independent components.
 
 ### Resampling and Recorrelating
 
-After resampling \( Z \) to obtain \( Z^* \), the resampled spatial data \( Y^* \) is computed as:
-\[
+After resampling $ Z $ to obtain $ Z^* $, the resampled spatial data $ Y^* $ is computed as:
+$$
 Y^* = L Z^*
-\]
+$$
 
 
 ## BRISC: Boostrap for rapid inference on spatial covariances
@@ -161,76 +161,76 @@ While applying the bootstrap to spatial data can decrease computational time com
 
  
 Mathematically, using the chain rule of probability, the joint likelihood can be wrote as  
-\[
+$$
 p(y) = p(y(x_1)) \prod_{i=2}^n p(y(x_i) \mid y(x_1), y(x_2), \dots, y(x_{i-1}))
-\] 
+$$
 
-By approximation where each term depends only on a neighborhood \( \mathcal{N}(x_i) \):
+By approximation where each term depends only on a neighborhood $ \mathcal{N}(x_i) $:
 
-\[
+$$
 \tilde{p}(y) = p(y(x_1)) \prod_{i=2}^n p(y(x_i) \mid y(\mathcal{N}(x_i)))
-\]
+$$
 
-Here, \( \mathcal{N}(x_i) \) represents the set of variables that \( y(x_i) \) depends on.
+Here, $ \mathcal{N}(x_i) $ represents the set of variables that $ y(x_i) $ depends on.
 
 This approximation corresponds to a **Nearest-Neighbor Gaussian Process (NNGP)** model, which is a computationally efficient approximation of a full Gaussian Process (GP). The NNGP model is defined as:
 
-\[
+$$
 y \sim \mathcal{N}(X\beta, \Sigma_e),
-\]
+$$
 
-where the precision matrix \(\Sigma_e^{-1}\) admits the factorization:
+where the precision matrix $\Sigma_e^{-1}$ admits the factorization:
 
-\[
+$$
 \Sigma_e^{-1} = (I - A)^\top D (I - A). \quad (3)
-\]
+$$
 
 Here:
-- \(A\) is a **sparse lower triangular matrix** with at most \(m\) non-zero entries in each row. These non-zero entries correspond to the nearest neighbors of each location.
-- \(D = \text{diag}(d_{ii})\) is a **diagonal matrix**.
+- $A$ is a **sparse lower triangular matrix** with at most $m$ non-zero entries in each row. These non-zero entries correspond to the nearest neighbors of each location.
+- $D = \text{diag}(d_{ii})$ is a **diagonal matrix**.
 
-The sparsity of \(A\) (controlled by \(m\)) makes the NNGP model computationally efficient, as it reduces the complexity of matrix operations. Typically, a small value of \(m\) (e.g., 10 or 20) is sufficient to achieve results that are effectively indistinguishable from the full GP model.
+The sparsity of $A$ (controlled by $m$) makes the NNGP model computationally efficient, as it reduces the complexity of matrix operations. Typically, a small value of $m$ (e.g., 10 or 20) is sufficient to achieve results that are effectively indistinguishable from the full GP model.
 
-In BRISC algorithm, the Cholesky factor \(\Sigma^{1/2}\) in the decorrelation step can be replaced with its surrogate \(\Sigma_e^{1/2}\), which is derived from the factorization of the precision matrix \(\Sigma_e^{-1}\) in the NNGP model. This surrogate is computationally efficient due to the sparsity of \(A\) and the diagonal nature of \(D\).
+In BRISC algorithm, the Cholesky factor $\Sigma^{1/2}$ in the decorrelation step can be replaced with its surrogate $\Sigma_e^{1/2}$, which is derived from the factorization of the precision matrix $\Sigma_e^{-1}$ in the NNGP model. This surrogate is computationally efficient due to the sparsity of $A$ and the diagonal nature of $D$.
 
 From the factorization in (3):
 
-\[
+$$
 \Sigma_e^{-1} = (I - A)^\top D (I - A),
-\]
+$$
 
-the surrogate Cholesky factor \(\Sigma_e^{1/2}\) is given by:
+the surrogate Cholesky factor $\Sigma_e^{1/2}$ is given by:
 
-\[
+$$
 \Sigma_e^{1/2} = D^{1/2} (I - A).
-\]
+$$
 
 Here:
-- \(D^{1/2}\) is the square root of the diagonal matrix \(D\).
-- \(I - A\) is a sparse lower triangular matrix with at most \(m\) non-zero entries per row.
+- $D^{1/2}$ is the square root of the diagonal matrix $D$.
+- $I - A$ is a sparse lower triangular matrix with at most $m$ non-zero entries per row.
 
 ---
 
 ### Decorrelation Step
 
-The decorrelation step transforms the original data \(y\) into a decorrelated vector \(\tilde{y}\):
+The decorrelation step transforms the original data $y$ into a decorrelated vector $\tilde{y}$:
 
-\[
+$$
 \tilde{y} = \Sigma_e^{1/2} (y - X\beta).
-\]
+$$
 
-Because \(D\) is diagonal and \(I - A\) is sparse, this computation requires only \(O(mn)\) floating-point operations (FLOPs), where \(n\) is the number of observations and \(m\) is the number of non-zero entries per row in \(A\).
+Because $D$ is diagonal and $I - A$ is sparse, this computation requires only $O(mn)$ floating-point operations (FLOPs), where $n$ is the number of observations and $m$ is the number of non-zero entries per row in $A$.
 
 ---
 
-### Distribution of \(\tilde{y}\)
+### Distribution of $\tilde{y}$
 
-Under the true model, each entry of the decorrelated vector \(\tilde{y}\) will be **identically distributed**. This is because:
+Under the true model, each entry of the decorrelated vector $\tilde{y}$ will be **identically distributed**. This is because:
 
-1. The transformation \(\tilde{y} = \Sigma_e^{1/2} (y - X\beta)\) removes the spatial dependence structure encoded in \(\Sigma_e\).
-2. The resulting vector \(\tilde{y}\) consists of independent and identically distributed (i.i.d.) random variables, typically following a standard normal distribution \(\mathcal{N}(0, I)\).
+1. The transformation $\tilde{y} = \Sigma_e^{1/2} (y - X\beta)$ removes the spatial dependence structure encoded in $\Sigma_e$.
+2. The resulting vector $\tilde{y}$ consists of independent and identically distributed (i.i.d.) random variables, typically following a standard normal distribution $\mathcal{N}(0, I)$.
 
-Since \(\tilde{y}\) is mostly uncorrelated, the bootstrap can then be applied.
+Since $\tilde{y}$ is mostly uncorrelated, the bootstrap can then be applied.
 
 
 ### Advantages of BRISC
