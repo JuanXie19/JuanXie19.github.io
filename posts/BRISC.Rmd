@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Introduction to Gaussian Processes
 
 A Gaussian process (GP) is a collection of random variables, any finite number of which have Gaussian distributions.
-A Gaussian process is fully specified by a mean function $\mu(x)$ and covariacne function $K(x,x')$:
+A Gaussian process is fully specified by a mean function $\mu(x)$ and covariance function $K(x,x')$:
 $$f(x) \sim \mathcal{GP} (m(x), K(x,x'))$$
 
 
@@ -57,6 +57,10 @@ Gaussian Processes (GPs) are widely used in machine learning, statistics, and sp
 ## Computational Challenges
 The main computational bottleneck in GPs is the need to invert the covariance matrix \( K(x,x') \), which has \( O(n^3) \) complexity (n is the number of observations). For large datasets, this becomes infeasible.
 
-## Common Approaches to Address Computational Bottlenecks
+## Nearest neighbor Gaussian process(NNGP)
 
-There are many ways to deal with the computational bottlenecks of GP. One widely used way is through sparse approximation. The fundamental intuition behind is that the spatial corrlation decays as the distance increases. Therefore, instead of calculating the all the pairwise covariance in the covariance function, we may just work on a few pairs. Mathmatically,  
+Nearest Neighbor Gaussian Process (NNGP) is a powerful method for approximating Gaussian Processes (GPs) to make them computationally feasible for large datasets. Traditional GPs require inverting a dense covariance matrix, which has a computational complexity of\( O(n^3) \)  and becomes infeasible for large n. NNGP addresses this challenge by approximating the full conditional distribution using only a subset of nearest neighbors.
+
+The intuition behind NNGP is that spatial correlation decays with distance. In other words, data points that are far apart have little influence on each other. Therefore, instead of considering all data points, NNGP assumes that each data point depends only on a small subset of its nearest neighbors. This reduces the computational complexity to \( O(nm^2) \),where 
+m is the number of neighbors, making NNGP scalable for large datasets.
+
