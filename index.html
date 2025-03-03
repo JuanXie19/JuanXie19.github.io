@@ -35,12 +35,6 @@
 <li><strong>Paper Summaries</strong>: Reflections on papers I’ve read, focusing on key takeaways and how they relate to my work or interests.</li>
 <li><strong>Thoughts on Learning</strong>: Musings on the challenges of being a PhD candidate, the joy of discovery, and the never-ending process of learning.</li>
 </ul>
-<h3 id="recent-posts">Recent Posts</h3>
-<p>{{ range first 5 (where .Site.RegularPages &ldquo;Section&rdquo; &ldquo;posts&rdquo;) }}</p>
-<ul>
-<li>[{{ .Title }}]({{ .RelPermalink }})
-{{ end }}</li>
-</ul>
 <h3 id="explore-more">Explore More</h3>
 <ul>
 <li><a href="/about/">About Me</a></li>

@@ -1,0 +1,62 @@
+---
+title: "Reading Notes on BRISC: Bootstrap for Rapid Inference on Spatial Covariances"
+date: 2025-02-28T19:22:00Z
+draft: false
+description: "This post explores the BRISC method for spatial covariance estimation."
+categories:
+  - papers
+  - spatial statistics
+tags:
+  - BRISC
+  - bootstrap
+  - spatial covariance
+  - Gaussian process
+output: md_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction to Gaussian Processes
+
+A Gaussian process (GP) is a collection of random variables, any finite number of which have Gaussian distributions.
+A Gaussian process is fully specified by a mean function $\mu(x)$ and covariacne function $K(x,x')$:
+$$f(x) \sim \mathcal{GP} (m(x), K(x,x'))$$
+
+
+Gaussian Processes (GPs) are widely used in machine learning, statistics, and spatial modeling due to their unique properties and flexibility. Here are some key reasons for their popularity:
+
+1. **Analytical Tractability**:
+   - GPs provide a **closed-form solution** for many problems, making them analytically tractable.
+   - For example, the posterior distribution of a GP can be derived explicitly, allowing for exact inference in many cases.
+
+2. **Marginal and Conditional Distributions**:
+   - Any **marginal distribution** of a GP is also Gaussian. This means that if you take a subset of the random variables in a GP, their joint distribution remains Gaussian.
+   - Similarly, the **conditional distribution** of a GP is Gaussian. This property is particularly useful for making predictions at new locations, as the conditional distribution can be computed analytically.
+
+3. **Flexibility in Modeling**:
+   - GPs can model complex, **non-linear relationships** by choosing an appropriate covariance (kernel) function.
+   - Common kernel functions include the **Radial Basis Function (RBF)**, **Matérn**, and **Exponential kernels**, each of which captures different types of relationships in the data.
+
+4. **Probabilistic Predictions**:
+   - GPs provide **uncertainty estimates** along with predictions. This is crucial for decision-making in applications like Bayesian optimization, where understanding the uncertainty is as important as the prediction itself.
+
+5. **Applications**:
+   - GPs are widely used in **geostatistics** (e.g., kriging), **machine learning** (e.g., regression, classification), and **Bayesian optimization** (e.g., hyperparameter tuning).
+   - They are also used in **time series analysis**, **robotics**, and **environmental modeling**.
+
+6. **Kernel Design**:
+   - The choice of kernel function allows GPs to capture a wide range of behaviors, such as periodicity, smoothness, and trends.
+   - Kernels can also be combined or adapted to create more complex models.
+
+7. **Interpretability**:
+   - The parameters of the kernel function often have intuitive interpretations, such as length scales or variance, making GPs more interpretable than some other machine learning models.
+
+## Computational Challenges
+The main computational bottleneck in GPs is the need to invert the covariance matrix \( K(x,x') \), which has \( O(n^3) \) complexity (n is the number of observations). For large datasets, this becomes infeasible.
+
+## Common Approaches to Address Computational Bottlenecks
+
+There are many ways to deal with the computational bottlenecks of GP. One widely used way is through sparse approximation. The fundamental intuition behind is that the spatial corrlation decays as the distance increases. Therefore, instead of calculating the all the pairwise covariance in the covariance function, we may just work on a few pairs. Mathmatically,  
