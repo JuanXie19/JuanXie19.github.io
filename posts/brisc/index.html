@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> | Juan&#39;s Hugo Site</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/about/">About</a></li>
+      
+      <li><a href="/posts/">Posts</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title"></span></h1>
+
+
+</div>
+
+<main>
+<h2 id="introduction-to-gaussian-processes">Introduction to Gaussian Processes</h2>
+<p>A Gaussian process (GP) is a collection of random variables, any finite
+number of which have Gaussian distributions. A Gaussian process is fully
+specified by a mean function <em>μ</em>(<em>x</em>) and covariance function
+<em>K</em>(<em>x</em>, <em>x</em>′):
+<em>f</em>(<em>x</em>) ∼ 𝒢𝒫(<em>m</em>(<em>x</em>), <em>K</em>(<em>x</em>, <em>x</em>′))</p>
+<p>Gaussian Processes (GPs) are widely used in machine learning,
+statistics, and spatial modeling due to their unique properties and
+flexibility. Here are some key reasons for their popularity:</p>
+<ol>
+<li><strong>Analytical Tractability</strong>:
+<ul>
+<li>GPs provide a <strong>closed-form solution</strong> for many problems, making
+them analytically tractable.</li>
+<li>For example, the posterior distribution of a GP can be derived
+explicitly, allowing for exact inference in many cases.</li>
+</ul>
+</li>
+<li><strong>Marginal and Conditional Distributions</strong>:
+<ul>
+<li>Any <strong>marginal distribution</strong> of a GP is also Gaussian. This
+means that if you take a subset of the random variables in a GP,
+their joint distribution remains Gaussian.</li>
+<li>Similarly, the <strong>conditional distribution</strong> of a GP is Gaussian.
+This property is particularly useful for making predictions at
+new locations, as the conditional distribution can be computed
+analytically.</li>
+</ul>
+</li>
+<li><strong>Flexibility in Modeling</strong>:
+<ul>
+<li>GPs can model complex, <strong>non-linear relationships</strong> by choosing
+an appropriate covariance (kernel) function.</li>
+<li>Common kernel functions include the <strong>Radial Basis Function
+(RBF)</strong>, <strong>Matérn</strong>, and <strong>Exponential kernels</strong>, each of which
+captures different types of relationships in the data.</li>
+</ul>
+</li>
+<li><strong>Probabilistic Predictions</strong>:
+<ul>
+<li>GPs provide <strong>uncertainty estimates</strong> along with predictions.
+This is crucial for decision-making in applications like
+Bayesian optimization, where understanding the uncertainty is as
+important as the prediction itself.</li>
+</ul>
+</li>
+<li><strong>Applications</strong>:
+<ul>
+<li>GPs are widely used in <strong>geostatistics</strong> (e.g., kriging),
+<strong>machine learning</strong> (e.g., regression, classification), and
+<strong>Bayesian optimization</strong> (e.g., hyperparameter tuning).</li>
+<li>They are also used in <strong>time series analysis</strong>, <strong>robotics</strong>,
+and <strong>environmental modeling</strong>.</li>
+</ul>
+</li>
+<li><strong>Kernel Design</strong>:
+<ul>
+<li>The choice of kernel function allows GPs to capture a wide range
+of behaviors, such as periodicity, smoothness, and trends.</li>
+<li>Kernels can also be combined or adapted to create more complex
+models.</li>
+</ul>
+</li>
+<li><strong>Interpretability</strong>:
+<ul>
+<li>The parameters of the kernel function often have intuitive
+interpretations, such as length scales or variance, making GPs
+more interpretable than some other machine learning models.</li>
+</ul>
+</li>
+</ol>
+<p>Despite their many advantages, GPs face a significant computational
+bottleneck: the need to invert the covariance matrix <em>K</em>(<em>x</em>, <em>x</em>′),
+which has <em>O</em>(<em>n</em><!-- raw HTML omitted -->3<!-- raw HTML omitted -->) complexity, where n is the number of
+observations). For large datasets, this becomes infeasible, limiting the
+scalability of traditional GPs.</p>
+<p>To address the computational challenges of traditional GPs, Nearest
+Neighbor Gaussian Process (NNGP) has been developed. NNGP approximates
+the full GP by limiting dependencies between data points to a small
+subset of nearest neighbors. This reduces the computational complexity
+while retaining the key properties of GPs, making it a scalable
+alternative for large datasets.</p>
+<h2 id="nearest-neighbor-gaussian-processnngp">Nearest neighbor Gaussian process(NNGP)</h2>
+<p>Nearest Neighbor Gaussian Process (NNGP) is a powerful method for
+approximating Gaussian Processes (GPs) to make them computationally
+feasible for large datasets. Traditional GPs require inverting a dense
+covariance matrix, which has a computational complexity
+of<em>O</em>(<em>n</em><!-- raw HTML omitted -->3<!-- raw HTML omitted -->) and becomes infeasible for large n. NNGP
+addresses this challenge by approximating the full conditional
+distribution using only a subset of nearest neighbors.</p>
+<p>The intuition behind NNGP is that spatial correlation decays with
+distance. In other words, data points that are far apart have little
+influence on each other. Therefore, instead of considering all data
+points, NNGP assumes that each data point depends only on a small subset
+of its nearest neighbors. This reduces the computational complexity to
+<em>O</em>(<em>n**m</em><!-- raw HTML omitted -->2<!-- raw HTML omitted -->),where m is the number of neighbors, making NNGP
+scalable for large datasets.</p>
+<h2 id="introduction-to-bootstrap">Introduction to Bootstrap</h2>
+<p>The <strong>bootstrap</strong> is a resampling technique used to estimate the
+distribution of a statistic by repeatedly sampling with replacement from
+the observed data. It is widely used for:</p>
+<ul>
+<li>Estimating confidence intervals.</li>
+<li>Assessing the variability of statistical estimates.</li>
+<li>Performing hypothesis testing.</li>
+</ul>
+<p>The bootstrap is computationally efficient because it avoids the need
+for complex analytical derivations or assumptions about the underlying
+distribution.</p>
+<h2 id="computational-advantage-over-mcmc">Computational Advantage over MCMC</h2>
+<ul>
+<li><strong>MCMC (Markov Chain Monte Carlo)</strong>: MCMC methods are
+computationally intensive, requiring many iterations to converge to
+the target distribution. They are often used for Bayesian inference
+but can be slow for large datasets or complex models.</li>
+<li><strong>Bootstrap</strong>: In contrast, the bootstrap is non-parametric and does
+not require sampling from a posterior distribution. It is often
+faster and easier to implement, making it a practical alternative
+for many applications.</li>
+</ul>
+<h2 id="challenges-in-spatial-data">Challenges in Spatial Data</h2>
+<p>While the bootstrap is widely applicable, its <strong>independence
+assumption</strong> is often violated in spatial data. In spatial datasets:</p>
+<ul>
+<li>Observations are typically <strong>correlated</strong> due to spatial proximity
+(e.g., temperature measurements at nearby locations are likely
+similar).</li>
+<li>Ignoring this correlation can lead to biased or inaccurate
+estimates.</li>
+</ul>
+<h2 id="decorrelating-spatial-data-with-cholesky-decomposition">Decorrelating Spatial Data with Cholesky Decomposition</h2>
+<p>To apply the bootstrap to spatial data, we need to account for spatial
+correlation. One common approach is to use <strong>Cholesky decomposition</strong> to
+decorrelate the data before resampling. Here’s how it works:</p>
+<ol>
+<li><strong>Covariance Matrix</strong>: Compute the covariance matrix <em>Σ</em> of the
+spatial data, which captures the correlation structure.</li>
+<li><strong>Cholesky Decomposition</strong>: Factorize <em>Σ</em> into
+<em>Σ</em> = <em>L**L</em><!-- raw HTML omitted --><em>T</em><!-- raw HTML omitted -->, where <em>L</em> is a lower triangular matrix.</li>
+<li><strong>Decorrelate the Data</strong>: Transform the original data <em>Y</em> into
+decorrelated data <em>Z</em> using:
+<em>Z</em> = <em>L</em><!-- raw HTML omitted -->−1<!-- raw HTML omitted --><em>Y</em>
+This transformation removes the spatial correlation, making the data
+approximately independent.</li>
+<li><strong>Resample</strong>: Apply the bootstrap to the decorrelated data <em>Z</em>.</li>
+<li><strong>Recorrelate</strong>: Transform the resampled data back to the original
+space using:
+<em>Y</em><!-- raw HTML omitted -->*<!-- raw HTML omitted --> = <em>L**Z</em><!-- raw HTML omitted -->*<!-- raw HTML omitted -->
+where <em>Z</em><!-- raw HTML omitted -->*<!-- raw HTML omitted --> is the resampled decorrelated data and
+<em>Y</em><!-- raw HTML omitted -->*<!-- raw HTML omitted --> is the resampled spatial data.</li>
+</ol>
+<h3 id="advantages-of-decorrelated-bootstrap">Advantages of Decorrelated Bootstrap</h3>
+<ul>
+<li><strong>Preserves Spatial Structure</strong>: By decorrelating and recorrelating
+the data, the bootstrap respects the spatial correlation structure.</li>
+<li><strong>Computationally Efficient</strong>: Cholesky decomposition is relatively
+fast compared to MCMC, making this approach scalable for large
+datasets.</li>
+<li><strong>Flexible</strong>: This method can be applied to a wide range of spatial
+models and datasets.</li>
+</ul>
+<h2 id="example-application">Example Application</h2>
+<p>In spatial statistics, the decorrelated bootstrap is often used to:</p>
+<ul>
+<li>Estimate confidence intervals for spatial predictions (e.g.,
+kriging).</li>
+<li>Assess the uncertainty of parameter estimates in spatial models.</li>
+<li>Validate the performance of spatial models.</li>
+</ul>
+<h2 id="mathematical-details">Mathematical Details</h2>
+<p>For those interested in the mathematical formulation, here’s a brief
+overview:</p>
+<h3 id="covariance-matrix">Covariance Matrix</h3>
+<p>The covariance matrix <em>Σ</em> is defined as:
+<em>Σ</em><!-- raw HTML omitted --><em>i**j</em><!-- raw HTML omitted --> = <em>k</em>(<em>x</em><!-- raw HTML omitted --><em>i</em><!-- raw HTML omitted -->, <em>x</em><!-- raw HTML omitted --><em>j</em><!-- raw HTML omitted -->)
+where <em>k</em>(<em>x</em><!-- raw HTML omitted --><em>i</em><!-- raw HTML omitted -->, <em>x</em><!-- raw HTML omitted --><em>j</em><!-- raw HTML omitted -->) is the spatial
+covariance function (e.g., RBF kernel).</p>
+<h3 id="cholesky-decomposition">Cholesky Decomposition</h3>
+<p>The Cholesky decomposition of <em>Σ</em> is:
+<em>Σ</em> = <em>L**L</em><!-- raw HTML omitted --><em>T</em><!-- raw HTML omitted -->
+where <em>L</em> is a lower triangular matrix.</p>
+<h3 id="decorrelating-the-data">Decorrelating the Data</h3>
+<p>The decorrelated data <em>Z</em> is computed as:
+<em>Z</em> = <em>L</em><!-- raw HTML omitted -->−1<!-- raw HTML omitted --><em>Y</em>
+This transformation ensures that <em>Z</em> has approximately independent
+components.</p>
+<h3 id="resampling-and-recorrelating">Resampling and Recorrelating</h3>
+<p>After resampling <em>Z</em> to obtain <em>Z</em><!-- raw HTML omitted -->*<!-- raw HTML omitted -->, the resampled spatial
+data <em>Y</em><!-- raw HTML omitted -->*<!-- raw HTML omitted --> is computed as:
+<em>Y</em><!-- raw HTML omitted -->*<!-- raw HTML omitted --> = <em>L**Z</em><!-- raw HTML omitted -->*<!-- raw HTML omitted --></p>
+<h2 id="brisc-boostrap-for-rapid-inference-on-spatial-covariances">BRISC: Boostrap for rapid inference on spatial covariances</h2>
+<p>While applying the bootstrap to spatial data can decrease computational
+time compared to traditional methods like MCMC, it is still not optimal
+for very large datasets due to the need to decorrelate the data, which
+still involves expensive Cholesky decomposition of the covariance
+matrix. The <strong>BRISC (Bootstrap for Rapid Inference on Spatial
+Covariances)</strong> method addresses this challenge by combining the
+<strong>bootstrap</strong> with the <strong>Nearest Neighbor Gaussian Process (NNGP)</strong>.</p>
+<p>Mathematically, using the chain rule of probability, the joint
+likelihood can be wrote as<br>
+$$
+p(y) = p(y(x_1)) \prod_{i=2}^n p(y(x_i) \mid y(x_1), y(x_2), \dots, y(x_{i-1}))
+$$</p>
+<p>By approximation where each term depends only on a neighborhood
+𝒩(<em>x</em><!-- raw HTML omitted --><em>i</em><!-- raw HTML omitted -->):</p>
+<p>$$
+\tilde{p}(y) = p(y(x_1)) \prod_{i=2}^n p(y(x_i) \mid y(\mathcal{N}(x_i)))
+$$</p>
+<p>Here, 𝒩(<em>x</em><!-- raw HTML omitted --><em>i</em><!-- raw HTML omitted -->) represents the set of variables that
+<em>y</em>(<em>x</em><!-- raw HTML omitted --><em>i</em><!-- raw HTML omitted -->) depends on.</p>
+<p>This approximation corresponds to a <strong>Nearest-Neighbor Gaussian Process
+(NNGP)</strong> model, which is a computationally efficient approximation of a
+full Gaussian Process (GP). The NNGP model is defined as:</p>
+<p><em>y</em> ∼ 𝒩(<em>X**β</em>, <em>Σ</em><!-- raw HTML omitted --><em>e</em><!-- raw HTML omitted -->),</p>
+<p>where the precision matrix <em>Σ</em><!-- raw HTML omitted --><em>e</em><!-- raw HTML omitted --><!-- raw HTML omitted -->−1<!-- raw HTML omitted --> admits the
+factorization:</p>
+<p><em>Σ</em><!-- raw HTML omitted --><em>e</em><!-- raw HTML omitted --><!-- raw HTML omitted -->−1<!-- raw HTML omitted --> = (<em>I</em> − <em>A</em>)<!-- raw HTML omitted -->⊤<!-- raw HTML omitted --><em>D</em>(<em>I</em> − <em>A</em>).  (3)</p>
+<p>Here: - <em>A</em> is a <strong>sparse lower triangular matrix</strong> with at most <em>m</em>
+non-zero entries in each row. These non-zero entries correspond to the
+nearest neighbors of each location. - <em>D</em> = diag(<em>d</em><!-- raw HTML omitted --><em>i**i</em><!-- raw HTML omitted -->)
+is a <strong>diagonal matrix</strong>.</p>
+<p>The sparsity of <em>A</em> (controlled by <em>m</em>) makes the NNGP model
+computationally efficient, as it reduces the complexity of matrix
+operations. Typically, a small value of <em>m</em> (e.g., 10 or 20) is
+sufficient to achieve results that are effectively indistinguishable
+from the full GP model.</p>
+<p>In BRISC algorithm, the Cholesky factor <em>Σ</em><!-- raw HTML omitted -->1/2<!-- raw HTML omitted --> in the
+decorrelation step can be replaced with its surrogate
+<em>Σ</em><!-- raw HTML omitted --><em>e</em><!-- raw HTML omitted --><!-- raw HTML omitted -->1/2<!-- raw HTML omitted -->, which is derived from the factorization
+of the precision matrix <em>Σ</em><!-- raw HTML omitted --><em>e</em><!-- raw HTML omitted --><!-- raw HTML omitted -->−1<!-- raw HTML omitted --> in the NNGP
+model. This surrogate is computationally efficient due to the sparsity
+of <em>A</em> and the diagonal nature of <em>D</em>.</p>
+<p>From the factorization in (3):</p>
+<p><em>Σ</em><!-- raw HTML omitted --><em>e</em><!-- raw HTML omitted --><!-- raw HTML omitted -->−1<!-- raw HTML omitted --> = (<em>I</em> − <em>A</em>)<!-- raw HTML omitted -->⊤<!-- raw HTML omitted --><em>D</em>(<em>I</em> − <em>A</em>),</p>
+<p>the surrogate Cholesky factor <em>Σ</em><!-- raw HTML omitted --><em>e</em><!-- raw HTML omitted --><!-- raw HTML omitted -->1/2<!-- raw HTML omitted --> is given
+by:</p>
+<p><em>Σ</em><!-- raw HTML omitted --><em>e</em><!-- raw HTML omitted --><!-- raw HTML omitted -->1/2<!-- raw HTML omitted --> = <em>D</em><!-- raw HTML omitted -->1/2<!-- raw HTML omitted -->(<em>I</em> − <em>A</em>).</p>
+<p>Here: - <em>D</em><!-- raw HTML omitted -->1/2<!-- raw HTML omitted --> is the square root of the diagonal matrix
+<em>D</em>. - <em>I</em> − <em>A</em> is a sparse lower triangular matrix with at most <em>m</em>
+non-zero entries per row.</p>
+<hr>
+<h3 id="decorrelation-step">Decorrelation Step</h3>
+<p>The decorrelation step transforms the original data <em>y</em> into a
+decorrelated vector <em>ỹ</em>:</p>
+<p><em>ỹ</em> = <em>Σ</em><!-- raw HTML omitted --><em>e</em><!-- raw HTML omitted --><!-- raw HTML omitted -->1/2<!-- raw HTML omitted -->(<em>y</em> − <em>X**β</em>).</p>
+<p>Because <em>D</em> is diagonal and <em>I</em> − <em>A</em> is sparse, this computation
+requires only <em>O</em>(<em>m**n</em>) floating-point operations (FLOPs), where <em>n</em>
+is the number of observations and <em>m</em> is the number of non-zero entries
+per row in <em>A</em>.</p>
+<hr>
+<h3 id="distribution-of-y">Distribution of <em>ỹ</em></h3>
+<p>Under the true model, each entry of the decorrelated vector <em>ỹ</em> will be
+<strong>identically distributed</strong>. This is because:</p>
+<ol>
+<li>The transformation
+<em>ỹ</em> = <em>Σ</em><!-- raw HTML omitted --><em>e</em><!-- raw HTML omitted --><!-- raw HTML omitted -->1/2<!-- raw HTML omitted -->(<em>y</em> − <em>X**β</em>) removes the
+spatial dependence structure encoded in <em>Σ</em><!-- raw HTML omitted --><em>e</em><!-- raw HTML omitted -->.</li>
+<li>The resulting vector <em>ỹ</em> consists of independent and identically
+distributed (i.i.d.) random variables, typically following a
+standard normal distribution 𝒩(0, <em>I</em>).</li>
+</ol>
+<p>Since <em>ỹ</em> is mostly uncorrelated, the bootstrap can then be applied.</p>
+<h3 id="advantages-of-brisc">Advantages of BRISC</h3>
+<ul>
+<li><strong>Computational Efficiency</strong>: By combining NNGP and bootstrap, BRISC
+achieves significant computational savings compared to traditional
+methods like MCMC.</li>
+<li><strong>Scalability</strong>: BRISC is highly scalable and can handle large
+spatial datasets that are infeasible with traditional GPs.</li>
+</ul>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>Saha, A., &amp; Datta, A. (2018). BRISC: bootstrap for rapid inference
+on spatial covariances. Stat, 7(1), e184.</li>
+</ul>
+
+</main>
+
+  <footer>
+  
+  
+  </footer>
+  </body>
+</html>
+
